@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import csv
 import os
@@ -70,8 +70,12 @@ def save_data():
         writer.writerow(row)
 
     return jsonify({'message': 'Data saved to CSV'}), 200
-
+    
+@app.route('/api/download', methods=['GET'])
+def download_csv():
+    return send_file(CSV_FILE, as_attachment=True)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=10000)
+
 
 
